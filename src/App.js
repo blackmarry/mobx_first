@@ -10,17 +10,17 @@ import "./App.css";
 
 class App extends Component {
 
-  render() {
-    return (
-      <MuiThemeProvider>
-        <div className="App">
-          <div>
+    render() {
+        return (
+            <MuiThemeProvider>
+            <div className="App">
+            <div>
             <MainBody />
-          </div>
-        </div>
-      </MuiThemeProvider>
-    );
-  }
+            </div>
+            </div>
+            </MuiThemeProvider>
+        );
+    }
 }
 
 export default App;

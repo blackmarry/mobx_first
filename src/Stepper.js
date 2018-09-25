@@ -6,114 +6,114 @@ import { Stepper, Step, StepLabel, Button, Typography, Paper } from '@material-u
 import MapsGoogle from './MapsGoogle';
 
 const styles = theme => ({
-  root: {
-    width: '90%',
-  },
-  backButton: {
-    marginRight: theme.spacing.unit,
-  },
-  instructions: {
-    marginTop: theme.spacing.unit,
-    marginBottom: theme.spacing.unit,
-  },
+	root: {
+		width: '90%',
+	},
+	backButton: {
+		marginRight: theme.spacing.unit,
+	},
+	instructions: {
+		marginTop: theme.spacing.unit,
+		marginBottom: theme.spacing.unit,
+	},
 });
 
 function getSteps() {
-  return ['Select your location', 'Connect gateway to the network', 'Connect lights and sensors', 'Name connected devices'];
+	return ['Select your location', 'Connect gateway to the network', 'Connect lights and sensors', 'Name connected devices'];
 }
 
 function getStepContent(stepIndex) {
-  switch (stepIndex) {
-    case 0:
-      return 'Select your location';
-    case 1:
-      return 'Connect gateway to the network';
-    case 2:
-      return 'Connect lights and sensors';
-    case 3:
-      return 'Name connected devices';
-    default:
-      return 'Setup network';
-  }
+	switch (stepIndex) {
+		case 0:
+			return 'Select your location';
+		case 1:
+			return 'Connect gateway to the network';
+		case 2:
+			return 'Connect lights and sensors';
+		case 3:
+			return 'Name connected devices';
+		default:
+			return 'Setup network';
+	}
 }
 
 class WizardStepper extends React.Component {
-  state = {
-    activeStep: 0,
-  };
+	state = {
+		activeStep: 0,
+	};
 
-  handleNext = () => {
-    const { activeStep } = this.state;
-    this.setState({
-      activeStep: activeStep + 1,
-    });
-  };
+	handleNext = () => {
+		const { activeStep } = this.state;
+		this.setState({
+			activeStep: activeStep + 1,
+		});
+	};
 
-  handleBack = () => {
-    const { activeStep } = this.state;
-    this.setState({
-      activeStep: activeStep - 1,
-    });
-  };
+	handleBack = () => {
+		const { activeStep } = this.state;
+		this.setState({
+			activeStep: activeStep - 1,
+		});
+	};
 
-  handleReset = () => {
-    this.setState({
-      activeStep: 0,
-    });
-  };
+	handleReset = () => {
+		this.setState({
+			activeStep: 0,
+		});
+	};
 
-  render() {
-    const { classes } = this.props;
-    const steps = getSteps();
-    const { activeStep } = this.state;
+	render() {
+		const { classes } = this.props;
+		const steps = getSteps();
+		const { activeStep } = this.state;
 
-    return (
-      <div className={classes.root}>
-        <Stepper activeStep={activeStep} alternativeLabel>
-          {steps.map(label => {
-            return (
-              <Step key={label}>
-                <StepLabel>{label}</StepLabel>
-              </Step>
-            );
-          })}
-        </Stepper>
+		return (
+			<div className={classes.root} >
+				<Stepper activeStep={activeStep} alternativeLabel>
+					{steps.map(label => {
+						return (
+							<Step key={label}>
+								<StepLabel>{label}</StepLabel>
+							</Step>
+						);
+					})}
+				</Stepper>
 
-        <div styles={{ height: 300, marin: 50 }}>
-          <MapsGoogle />
-        </div>
+				<div styles={{ height: 300, marin: 50 }}>
+					MapsGoogle
+				</div>
 
-        <div>
-          {this.state.activeStep === steps.length ? (
-            <div>
-              <Typography className={classes.instructions}>All steps completed</Typography>
-              <Button onClick={this.handleReset}>Reset</Button>
-            </div>
-          ) : (
-            <div>
-              <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
-              <div>
-                <Button
-                  disabled={activeStep === 0}
-                  onClick={this.handleBack}
-                  className={classes.backButton}
-                >
-                  Back
-                </Button>
-                <Button variant="contained" color="primary" onClick={this.handleNext}>
-                  {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-                </Button>
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
-    );
-  }
+				<div>
+					{this.state.activeStep === steps.length ? (
+						<div>
+							<Typography className={classes.instructions}>All steps completed</Typography>
+							<Button onClick={this.handleReset}>Reset</Button>
+						</div>
+					) : (
+						<div>
+							<Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
+							<div>
+								<Button
+									disabled={activeStep === 0}
+									onClick={this.handleBack}
+									className={classes.backButton}
+								>
+									Back
+								</Button>
+								<Button variant="contained" color="primary" onClick={this.handleNext}>
+									{activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+								</Button>
+							</div>
+						</div>
+					)}
+				</div>
+			</div>
+		);
+	}
 }
 
 WizardStepper.propTypes = {
-  classes: PropTypes.object,
+	classes: PropTypes.object,
 };
 
 export default withStyles(styles)(WizardStepper);

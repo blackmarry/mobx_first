@@ -10,16 +10,16 @@ const styles = {
 
 class MainBody extends React.Component {
 
-  render() {
+	render() {
 
-    return (
-      <Grid container>
-        <Grid item xs={12}>
-        	<AppBody styles={styles.Paper} />
-        </Grid>
-      </Grid>
-    );
-  }
+		return (
+			<Grid container>
+				<Grid item xs={12}>
+					<AppBody styles={styles.Paper} />
+				</Grid>
+			</Grid>
+		);
+	}
 }
 
 export default MainBody;

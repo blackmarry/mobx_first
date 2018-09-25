@@ -1,5 +1,10 @@
 import React from 'react';
-import { Grid, Paper, Typography, Drawer, AppBar, Toolbar, List, ListItem, ListItemIcon, ListItemText, IconButton, Hidden, Divider, Menu, MenuItem } from '@material-ui/core';
+import { 
+  Grid, Paper, Typography, Drawer, AppBar, 
+  Toolbar, List, ListItem, ListItemIcon, ListItemText, 
+  IconButton, Hidden, Divider, Menu, MenuItem, MenuList 
+} from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
 
 import MenuIcon from '@material-ui/icons/Menu';
 import HubIcon from '@material-ui/icons/DeviceHub';
@@ -9,6 +14,43 @@ import DashboardIcon from '@material-ui/icons/Home';
 import AppsIcon from '@material-ui/icons/Apps';
 import PeopleIcon from '@material-ui/icons/People';
 import HelpIcon from '@material-ui/icons/Help';
+import HighlightIcon from '@material-ui/icons/Highlight';
+
+import WizardStepper from './Stepper';
+
+const drawerWidth = 240;
+
+const styles = theme => ({
+  root: {
+    flexGrow: 1,
+    height: 440,
+    zIndex: 1,
+    overflow: 'hidden',
+    position: 'relative',
+    display: 'flex',
+    width: '100%',
+  },
+  appBar: {
+    zIndex: theme.zIndex.drawer + 1,
+  },
+  navIconHide: {
+    [theme.breakpoints.up('md')]: {
+      display: 'none',
+    },
+  },
+  toolbar: theme.mixins.toolbar,
+  drawerPaper: {
+    width: drawerWidth,
+    [theme.breakpoints.up('md')]: {
+      position: 'relative',
+    },
+  },
+  content: {
+    flexGrow: 1,
+    backgroundColor: theme.palette.background.default,
+    padding: theme.spacing.unit * 3,
+  },
+});
 
 class AppBody extends React.Component {
 
@@ -34,14 +76,17 @@ class AppBody extends React.Component {
     this.setState({ anchorEl: null });
   };
 
-	render() {
+  render() {
+
+    const { classes, theme } = this.props
+    const { mobileOpen } = this.state
 
     const { auth, anchorEl } = this.state;
     const open = Boolean(anchorEl);
 
-    const drawer = (
+    const leftDrawer = (
       <div>
-        <div className="toolbar" />
+        <div className={classes.toolbar} />
           <Divider />
           <List>
             <ListItem>
@@ -89,17 +134,67 @@ class AppBody extends React.Component {
       </div>
     );
 
-		return(
-			<Grid container>
+    const rightDrawer = (
+      <div>
+        <div className={classes.toolbar} />
+          <Divider />
+          <List>
+            <ListItem>
+              <ListItemIcon>
+                <HighlightIcon />
+              </ListItemIcon>
+              <ListItemText
+                primary="Room 1"
+              />
+            </ListItem>
+          </List>
+          <Divider />
+          <List>
+            <ListItem>
+              <ListItemIcon>
+                <HighlightIcon />
+              </ListItemIcon>
+              <ListItemText
+                primary="Room 2"
+              />
+            </ListItem>
+          </List>
+          <Divider />
+          <List>
+            <ListItem>
+              <ListItemIcon>
+                <HighlightIcon />
+              </ListItemIcon>
+              <ListItemText
+                primary="Room 3"
+              />
+            </ListItem>
+          </List>
+          <Divider />
+          <List>
+            <ListItem>
+              <ListItemIcon>
+                <HighlightIcon />
+              </ListItemIcon>
+              <ListItemText
+                primary="Room 4"
+              />
+            </ListItem>
+          </List>
+      </div>
+    );
+
+    return(
+      <Grid container>
         <Grid item xs={12}>
-          <div className="root">
-            <AppBar className="appBar">
+          <div className={classes.root}>
+            <AppBar className={classes.appBar} position="absolute">
               <Toolbar>
                 <IconButton
                   color="inherit"
                   aria-label="Open drawer"
                   onClick={this.handleDrawerToggle}
-                  className="navIconHide"
+                  className={classes.navIconHide}
                 >
                   <MenuIcon />
                 </IconButton>
@@ -107,7 +202,7 @@ class AppBody extends React.Component {
                   Dashboard
                 </Typography>
 
-                <div>
+                <div style={{ right: 10, display: "flex", position: "absolute" }}>
                     <IconButton
                       onClick={this.handleMenu}
                       color="inherit"
@@ -153,11 +248,14 @@ class AppBody extends React.Component {
                 anchor="left"
                 open={this.state.mobileOpen}
                 onClose={this.handleDrawerToggle}
+                classes={{
+                  paper: classes.drawerPaper,
+                }}
                 ModalProps={{
                   keepMounted: true, // Better open performance on mobile.
                 }}
               >
-                {drawer}
+                {leftDrawer}
               </Drawer>
             </Hidden>
 
@@ -166,21 +264,43 @@ class AppBody extends React.Component {
                 variant="permanent"
                 open
               >
-                {drawer}
+                {leftDrawer}
               </Drawer>
             </Hidden>
 
-            <main className="content">
-              <div className="toolbar" />
-              <Typography noWrap>{'Something'}</Typography>
+            <Hidden smDown implementation="css">
+              <Drawer
+                variant="permanent"
+                open
+              >
+              <div  style={{ position: "inherit", marginTop: 0, right: 0 }}>
+                {rightDrawer}
+              </div>
+              </Drawer>
+            </Hidden>
+
+            <main className={classes.content}>
+              <div className={classes.toolbar} />
+              
+              <Paper style={{ width: 150, height: 50, marginLeft:drawerWidth, paddingTop: 25, backgroundColor: "lightyellow" }}>
+                <div className="shining-lights-number">
+                  35
+                </div>
+                <div className="shining-lights-text">
+                  shining lights
+                </div>
+              </Paper>
+              
+              <Typography noWrap>{'Graph'}</Typography>
+
+              <WizardStepper />
             </main>
 
           </div>
-
         </Grid>
       </Grid>
-		);
-	}
+    );
+  }
 }
 
-export default AppBody;
+export default withStyles(styles) (AppBody);

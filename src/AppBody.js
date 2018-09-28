@@ -19,6 +19,8 @@ import HelpIcon from '@material-ui/icons/Help';
 import WizardStepper from './Stepper';
 import Dashboard from './Dashboard';
 import ControlCenter from './ControlCenter';
+import SceneSettings from './SceneSettings';
+
 
 const drawerWidth = 240;
 
@@ -226,6 +228,8 @@ class AppBody extends React.Component {
 							<ControlCenter classes={classes} />
 
 							<Dashboard classes={classes} />
+
+							<SceneSettings />
 
 							<WizardStepper />
 						</main>

@@ -13,11 +13,7 @@ class MainBody extends React.Component {
 	render() {
 
 		return (
-			<Grid container>
-				<Grid item xs={12}>
-					<AppBody styles={styles.Paper} />
-				</Grid>
-			</Grid>
+			<AppBody styles={styles.Paper} />
 		);
 	}
 }
